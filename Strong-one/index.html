@@ -14,23 +14,43 @@
             margin: 0;
         }
         #spinner {
-            width: 500px;
-            height: 500px;
+            width: 1000px;
+            height: 1000px;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
         }
+
     </style>
 </head>
 <body>
     <div id="spinner"></div>
     <script>
-        let frame = 0; // Start from the first image
-const totalFrames = 71; // Adjust based on your images
-const spinner = document.getElementById("spinner");
-
-function updateImage() {
-                let imageName = `Studio_002_Cam_001${String(frame).padStart(4, '0')}.jpg`;
-                spinner.style.backgroundImage = `url('https://freckleyev.github.io/my-spins/Strong-one/images/${imageName}')`;
+                    let frame = 0;
+            const totalFrames = 71; // Adjust based on your images
+            const spinner = document.getElementById("spinner");
+            const images = [];
+            
+            // Preload images
+            for (let i = 0; i < totalFrames; i++) {
+                let imageName = `Studio_002_Cam_001${String(i).padStart(4, '0')}.jpg`;
+                images[i] = new Image();
+                images[i].src = `https://freckleyev.github.io/my-spins/Strong-one/images/${imageName}`;
+            }
+            
+            // Wait for images to load, then update the spinner
+            let imagesLoaded = 0;
+            images.forEach((img) => {
+                img.onload = () => {
+                    imagesLoaded++;
+                    if (imagesLoaded === totalFrames) {
+                        updateImage(); // Start spinner only after preloading
+                    }
+                };
+            });
+            
+            function updateImage() {
+                spinner.style.backgroundImage = `url('${images[frame].src}')`;
             }
             
             // Mouse movement to change frames
@@ -40,9 +60,7 @@ function updateImage() {
                 if (frame >= totalFrames) frame = totalFrames - 1;
                 updateImage();
             });
-            
-            // Initial image load
-            updateImage();
+
     </script>
 </body>
 </html>
