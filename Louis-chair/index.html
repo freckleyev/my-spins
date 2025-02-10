@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360° Product Spinner</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+            margin: 0;
+        }
+        #spinner {
+            width: 1000px;
+            height: 1000px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="spinner"></div>
+    <script>
+                                    let frame = 0;
+                const totalFrames = 71; // Adjust based on your images
+                const spinner = document.getElementById("spinner");
+                const images = [];
+                let direction = 1; // 1 = right, -1 = left
+                let autoSpin = true; // Controls auto-spin
+                
+                // Preload images
+                for (let i = 0; i < totalFrames; i++) {
+                    let imageName = `Studio_002_Cam_001${String(i).padStart(4, '0')}.jpg`;
+                    images[i] = new Image();
+                    images[i].src = `https://freckleyev.github.io/my-spins/Strong-one/images/${imageName}`;
+                }
+                
+                // Wait for images to load, then start the intro animation
+                let imagesLoaded = 0;
+                images.forEach((img) => {
+                    img.onload = () => {
+                        imagesLoaded++;
+                        if (imagesLoaded === totalFrames) {
+                            startIntroAnimation();
+                        }
+                    };
+                });
+                
+                function updateImage() {
+                    spinner.style.backgroundImage = `url('${images[frame].src}')`;
+                }
+                
+                // Auto-spin animation (5 frames left, then 5 frames right)
+                function startIntroAnimation() {
+                    let moves = 0;
+                    let interval = setInterval(() => {
+                        frame += direction;
+                        if (frame >= totalFrames) frame = 0;
+                        if (frame < 0) frame = totalFrames - 1;
+                        updateImage();
+                
+                        moves++;
+                        if (moves >= 5) {
+                            direction *= -1; // Reverse direction
+                            moves = 0;
+                        }
+                    }, 100); // Adjust speed if needed
+                
+                    // Stop the intro animation after 2 full cycles (left + right)
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        autoSpin = false;
+                    }, 2000);
+                }
+                
+                // Mouse movement to change frames
+                document.addEventListener("mousemove", (event) => {
+                    if (autoSpin) return; // Disable mouse control during auto-spin
+                    let movement = Math.floor((event.clientX / window.innerWidth) * totalFrames);
+                    frame = movement;
+                    if (frame >= totalFrames) frame = totalFrames - 1;
+                    updateImage();
+                });
+    </script>
+</body>
+</html>
