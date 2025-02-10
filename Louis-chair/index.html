@@ -27,8 +27,8 @@
 <body>
     <div id="spinner"></div>
     <script>
-                                    let frame = 0;
-                const totalFrames = 71; // Adjust based on your images
+                let frame = 0;
+                const totalFrames = 72; // Adjust based on your images
                 const spinner = document.getElementById("spinner");
                 const images = [];
                 let direction = 1; // 1 = right, -1 = left
@@ -36,9 +36,9 @@
                 
                 // Preload images
                 for (let i = 0; i < totalFrames; i++) {
-                    let imageName = `Studio_002_Cam_001${String(i).padStart(4, '0')}.jpg`;
+                    let imageName = `VEB-Louis_v1_004_Cam_002${String(i).padStart(4, '0')}.jpg`;
                     images[i] = new Image();
-                    images[i].src = `https://freckleyev.github.io/my-spins/Strong-one/images/${imageName}`;
+                    images[i].src = `https://freckleyev.github.io/my-spins/Louis-chair/images/${imageName}`;
                 }
                 
                 // Wait for images to load, then start the intro animation
