@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360° Product Spinner</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+            margin: 0;
+        }
+        #spinner {
+            width: 500px;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="spinner"></div>
+    <script>
+        let frame = 1;
+        const totalFrames = 71; // Adjust based on your images
+        const spinner = document.getElementById("spinner");
+
+        function updateImage() {
+            spinner.style.backgroundImage = `url('https://yourusername.github.io/my-spins/Strong-one/images/image${frame}.jpg')`;
+        }
+
+        document.addEventListener("mousemove", (event) => {
+            let movement = Math.floor((event.clientX / window.innerWidth) * totalFrames);
+            frame = movement + 1;
+            if (frame > totalFrames) frame = totalFrames;
+            updateImage();
+        });
+
+        updateImage();
+    </script>
+</body>
+</html>
