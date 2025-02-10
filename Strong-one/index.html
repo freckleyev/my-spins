@@ -24,22 +24,25 @@
 <body>
     <div id="spinner"></div>
     <script>
-        let frame = 1;
-        const totalFrames = 71; // Adjust based on your images
-        const spinner = document.getElementById("spinner");
+        let frame = 0; // Start from the first image
+const totalFrames = 36; // Adjust based on your images
+const spinner = document.getElementById("spinner");
 
-        function updateImage() {
-            spinner.style.backgroundImage = `url('https://yourusername.github.io/my-spins/Strong-one/images/image${frame}.jpg')`;
-        }
-
-        document.addEventListener("mousemove", (event) => {
-            let movement = Math.floor((event.clientX / window.innerWidth) * totalFrames);
-            frame = movement + 1;
-            if (frame > totalFrames) frame = totalFrames;
+function updateImage() {
+                let imageName = `Studio_002_Cam_001${String(frame).padStart(4, '0')}.jpg`;
+                spinner.style.backgroundImage = `url('https://freckleyev.github.io/my-spins/Strong-one/images/${imageName}')`;
+            }
+            
+            // Mouse movement to change frames
+            document.addEventListener("mousemove", (event) => {
+                let movement = Math.floor((event.clientX / window.innerWidth) * totalFrames);
+                frame = movement;
+                if (frame >= totalFrames) frame = totalFrames - 1;
+                updateImage();
+            });
+            
+            // Initial image load
             updateImage();
-        });
-
-        updateImage();
     </script>
 </body>
 </html>
